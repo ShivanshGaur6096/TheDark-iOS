@@ -102,7 +102,7 @@ This project follows Apple's design principles for audio-haptic experiences:
 
 - [WWDC 2019: Designing Audio-Haptic Experiences](https://developer.apple.com/videos/play/wwdc2019/810/)
 - [Core Haptics Documentation](https://developer.apple.com/documentation/corehaptics)
-- [Human Interface Guidelines: Haptics](https://developer.apple.com/design/human-interface-guidelines/haptics)
+- [Human Interface Guidelines: Playing Haptics](https://developer.apple.com/design/human-interface-guidelines/playing-haptics)
 
 ---
 
