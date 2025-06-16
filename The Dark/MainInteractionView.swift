@@ -73,14 +73,14 @@ struct MainInteractionView: View {
                 }
 
                 // Toggle button (only visible in light mode)
-                if isDarkMode {
+                if !isDarkMode {
                     VStack {
                         HStack {
                             Spacer()
                             Button(action: {
                                 resetStates()
                             }) {
-//                                Image(systemName: "lightbulb.fill"
+                                Image(systemName: "lightbulb.fill")
                                     .font(.system(size: 24))
                                     .foregroundColor(.black.opacity(0.7))
                                     .padding()
@@ -136,6 +136,7 @@ struct MainInteractionView: View {
                         isLongPressing = false
                         withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
                             isRevealed = true
+                            isDarkMode = false
                             lightIntensity = 1.0
                             isSpreading = true
                             spreadRadius = max(geometry.size.width, geometry.size.height)
@@ -206,7 +207,7 @@ struct MainInteractionView: View {
             isTouching = false
             isLongPressing = false
             showInitialHint = true
-//            isDarkMode = true
+            isDarkMode = true
             
             // Hide hint after duration
             DispatchQueue.main.asyncAfter(deadline: .now() + hintDisplayDuration) {
