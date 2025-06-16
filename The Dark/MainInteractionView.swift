@@ -71,38 +71,22 @@ struct MainInteractionView: View {
                     .allowsHitTesting(false)
                     .opacity(isTouching ? 1 : 0)
                 }
-                
+
                 // Toggle button (only visible in light mode)
-                if !isDarkMode {
+                if isDarkMode {
                     VStack {
                         HStack {
                             Spacer()
                             Button(action: {
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    isDarkMode = true
-                                    // Reset states when switching to dark mode
-                                    isRevealed = false
-                                    isSpreading = false
-                                    spreadRadius = 150
-                                    lightIntensity = 0
-                                    showInitialHint = true
-                                    isTouching = false
-                                    
-                                    // Hide hint after duration
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + hintDisplayDuration) {
-                                        withAnimation(.easeOut(duration: 0.5)) {
-                                            showInitialHint = false
-                                        }
-                                    }
-                                }
+                                resetStates()
                             }) {
-                                Image(systemName: "lightbulb.fill")
+//                                Image(systemName: "lightbulb.fill"
                                     .font(.system(size: 24))
-                                    .foregroundColor(.black)
+                                    .foregroundColor(.black.opacity(0.7))
                                     .padding()
                                     .background(
                                         Circle()
-                                            .fill(Color.white.opacity(0.3))
+                                            .fill(Color.gray.opacity(0.2))
                                     )
                             }
                             .padding()
@@ -211,6 +195,30 @@ struct MainInteractionView: View {
         } catch {
             print("Failed to play haptic pattern: \(error.localizedDescription)")
         }
+    }
+    
+    private func resetStates() {
+        withAnimation(.easeInOut(duration: 0.5)) {
+            isRevealed = false
+            isSpreading = false
+            spreadRadius = 150
+            lightIntensity = 0
+            isTouching = false
+            isLongPressing = false
+            showInitialHint = true
+//            isDarkMode = true
+            
+            // Hide hint after duration
+            DispatchQueue.main.asyncAfter(deadline: .now() + hintDisplayDuration) {
+                withAnimation(.easeOut(duration: 0.5)) {
+                    showInitialHint = false
+                }
+            }
+        }
+        
+        // Play reset sound
+        SoundManager.shared.playTorchOff()
+        triggerHapticFeedback(intensity: 0.5)
     }
 }
 
