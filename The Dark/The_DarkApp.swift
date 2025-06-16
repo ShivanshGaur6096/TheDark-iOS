@@ -13,11 +13,14 @@ struct The_DarkApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if showSplash {
-                SplashScreenView(showSplash: $showSplash)
-            } else {
-                MainInteractionView()
+            Group {
+                if showSplash {
+                    SplashScreenView(showSplash: $showSplash)
+                } else {
+                    MainInteractionView()
+                }
             }
+            .preferredColorScheme(.light)
         }
     }
 }
