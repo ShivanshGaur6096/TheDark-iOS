@@ -13,6 +13,7 @@ struct MainInteractionView: View {
     @State private var isSpreading = false
     @State private var isDarkMode = true
     @State private var isTouching = false
+    @State private var isAudioEnabled = true
     
     // Constants
     private let hapticRateLimit: TimeInterval = 1.0 / 32.0 // 32Hz rate limit
@@ -77,6 +78,25 @@ struct MainInteractionView: View {
                     VStack {
                         HStack {
                             Spacer()
+                            // Toggle Audio State
+                            Button(action: {
+                                isAudioEnabled.toggle()
+                                if !isAudioEnabled {
+                                    SoundManager.shared.stopAllSounds()
+                                }
+                            }) {
+                                Image(systemName: isAudioEnabled ? "waveform" : "waveform.slash")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.black.opacity(0.7))
+                                    .padding()
+                                    .background(
+                                        Circle()
+                                            .fill(Color.gray.opacity(0.2))
+                                    )
+                            }
+                            .padding()
+                            
+                            // Toggle View State
                             Button(action: {
                                 resetStates()
                             }) {
@@ -101,7 +121,7 @@ struct MainInteractionView: View {
                         guard isDarkMode else { return }
                         if !isTouching {
                             isTouching = true
-                           SoundManager.shared.playTorchOn()
+                            playSound { SoundManager.shared.playTorchOn() }
                         }
                         lightPosition = value.location
                         let center = CGPoint(x: geometry.size.width/2, y: geometry.size.height/2)
@@ -122,7 +142,7 @@ struct MainInteractionView: View {
                         guard isDarkMode else { return }
                         isTouching = false
                         lightIntensity = 0
-                        SoundManager.shared.playTorchOff()
+                        playSound { SoundManager.shared.playTorchOff() }
                     }
             )
             .simultaneousGesture(
@@ -142,7 +162,7 @@ struct MainInteractionView: View {
                             spreadRadius = max(geometry.size.width, geometry.size.height)
                         }
                         triggerHapticFeedback(intensity: 1.0)
-                        SoundManager.shared.playWelcome()
+                        playSound { SoundManager.shared.playWelcome() }
                     }
             )
         }
@@ -218,8 +238,15 @@ struct MainInteractionView: View {
         }
         
         // Play reset sound
-        SoundManager.shared.playTorchOff()
+        playSound { SoundManager.shared.playTorchOff() }
         triggerHapticFeedback(intensity: 0.5)
+    }
+    
+    // Add this function to handle sound playback with audio state check
+    private func playSound(_ soundAction: () -> Void) {
+        if isAudioEnabled {
+            soundAction()
+        }
     }
 }
 
