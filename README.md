@@ -1,5 +1,7 @@
 # The Dark - An Immersive iOS Experience 🌟
 
+<img src="The%20Dark/Assets.xcassets/LaunchImage.imageset/TheDarkHut@2x.png" alt="The Dark App Icon" width="200" style="border-radius: 20px;">
+
 > *"In a world where screens are just pixels, we bring you an experience that you can feel..."* 
 
 ## 🎬 The Story Behind
@@ -15,6 +17,9 @@ Inspired by Apple's groundbreaking "world's first haptic movie trailer" for "F1:
 - Interactive gestures
 
 Think of it as a digital treasure hunt where you use light to discover secrets in the darkness. It's like having a magical torch in your pocket! 🔦
+
+## 📱 App Demo
+https://github.com/user-attachments/assets/ce786680-1243-4440-b9d7-18e757f55222
 
 ## 🛠️ Technical Deep Dive
 
